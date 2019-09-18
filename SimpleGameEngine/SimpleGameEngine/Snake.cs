@@ -91,11 +91,22 @@ public class Snake{
             3. use the segments.Add method to add the newSegment to the back of
             the segments List.
         */
+<<<<<<< Updated upstream
 
         SnakeSegment lastSegment = segments[segments.Count];
         SnakeSegment newSegment = new SnakeSegment(lastSegment.PrevX, lastSegment.PrevY, 'o');
         segments.Add(newSegment);
 
+=======
+<<<<<<< Updated upstream
+=======
+
+        SnakeSegment lastSegment = segments[segments.Count-1];
+        SnakeSegment newSegment = new SnakeSegment(lastSegment.PrevX, lastSegment.PrevY, 'o');
+        segments.Add(newSegment);
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     }
 
     public void UpdateSegments(){
@@ -141,12 +152,26 @@ public class Snake{
 
             It should return false otherwise.
         */
+<<<<<<< Updated upstream
 
         if (segments[0].X == segments[segments.Count].X && segments[0].Y == segments[segments.Count-1].Y)
         {
             return true;
         }
         else
+=======
+<<<<<<< Updated upstream
+=======
+
+        for (int i = 1; i<segments.Count; i++)
+        {
+            if (segments[0].X == segments[i].X && segments[0].Y == segments[i].Y)
+            {
+                return true;
+            }                
+        }
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         return false;
     }
 
