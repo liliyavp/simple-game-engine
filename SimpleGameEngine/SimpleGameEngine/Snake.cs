@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using static System.Console;
+using static Time;
 
 public class Snake{
     private double x; //the x position of the snake
@@ -24,6 +25,10 @@ public class Snake{
             Initialize the x, y and speed fields 
             using the values passed to the constructor
         */
+
+        this.x = x;
+        this.y = y;
+        this.speed = speed;
 
         
         /*  Adds a segment to the segments List
@@ -86,6 +91,11 @@ public class Snake{
             3. use the segments.Add method to add the newSegment to the back of
             the segments List.
         */
+
+        SnakeSegment lastSegment = segments[segments.Count];
+        SnakeSegment newSegment = new SnakeSegment(lastSegment.PrevX, lastSegment.PrevY, 'o');
+        segments.Add(newSegment);
+
     }
 
     public void UpdateSegments(){
@@ -105,6 +115,20 @@ public class Snake{
             You can use the segments.Count property to loop through
             the List of snake segments.  
         */
+
+        for (int i = 0; i < segments.Count; i++)
+        {
+            if (i == 0)
+            {
+                segments[i].X = X;
+                segments[i].Y = Y;
+            }
+            else
+            {
+                segments[i].X = segments[i - 1].PrevX;
+                segments[i].Y = segments[i - 1].PrevY;
+            }
+        }
     }
 
     public bool IsHeadTouchingBody(){
@@ -117,6 +141,12 @@ public class Snake{
 
             It should return false otherwise.
         */
+
+        if (segments[0].X == segments[segments.Count].X && segments[0].Y == segments[segments.Count-1].Y)
+        {
+            return true;
+        }
+        else
         return false;
     }
 
@@ -135,7 +165,16 @@ public class Snake{
             Complete this decision structure to also update the 
             directions when the LEFT and RIGHT keys are pressed.
         */
-
+        else if(Input.KeyPressed == InputType.LEFT)
+        {
+            yDir = 0;
+            xDir = -1;
+        }
+        else if (Input.KeyPressed == InputType.RIGHT)
+        {
+            yDir = 0;
+            xDir = 1;
+        }
         /*  ------------------------------------------
             2.6
             ------------------------------------------
@@ -159,5 +198,11 @@ public class Snake{
             REMEMBER: you can use the static Time class to access the 
             DeltaTime property.
         */
+
+        double distanceTravelled = xDir * speed * DeltaTime;
+        x = x + distanceTravelled;
+        distanceTravelled = yDir * speed * DeltaTime;
+        y = y + distanceTravelled;
+
     }
 }
