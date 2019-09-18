@@ -39,9 +39,19 @@ public class Pickup{
             between 0 and maxX, and y to a random value 
             between 0 maxY.
         */
+<<<<<<< Updated upstream
 
         x = r.Next(maxX);
         y = r.Next(maxY);
 
+=======
+<<<<<<< Updated upstream
+=======
+
+        x = r.Next(0, maxX);
+        y = r.Next(0, maxY);
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     }
 }
