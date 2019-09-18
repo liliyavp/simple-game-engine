@@ -121,7 +121,7 @@ class Program
                     -   Break out of the game loop.
                 */
 
-                if (IsSnakeInBounds() == false || snake.IsHeadTouchingBody())
+                if (IsSnakeInBounds() == false || snake.IsHeadTouchingBody() == true)
                 {
                     canvas.WriteMessageBottom("Game Over :(");
                     Console.WriteLine();
@@ -144,7 +144,25 @@ class Program
                     BONUS: See if you can alternate the colours of the segments 
                     between Magenta and Green.
                 */
+                for (int j = 0; j<snake.Segments.Count; j++)
+                {
+                    if (snake.Segments[j].PrevX == 0)
+                    {
+                        Console.Write("| ");
+                    }
+                    else
+                        if (snake.Segments[j].PrevX == canvas.Width)
+                    {
+                        Console.Write(" |");
+                    }
+                    else
+                        if (snake.Segments[j].PrevY == 0 || snake.Segments[j].PrevY == canvas.Height+1)
+                    {
+                        Console.Write("===");
+                    }
 
+                    canvas.Clear(snake.Segments[j].PrevX, snake.Segments[j].PrevY);
+                }
                 for (int i = 0; i<snake.Segments.Count; i++)
                 {
                     if (i%2 == 0)
@@ -172,7 +190,7 @@ class Program
             within the bounds of the canvas and false if it's not
         */
 
-        if (snake.X <= canvas.Width && snake.Y <= canvas.Height)
+        if (snake.X < canvas.Width && snake.X > 0 && snake.Y < canvas.Height && snake.Y > 0)
         {
             return true;
         }
