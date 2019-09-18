@@ -65,6 +65,10 @@ class Program
                 we update it
             */
 
+            int prevSnakeX = snake.X;
+            int prevSnakeY = snake.Y;
+            snake.Update();
+
             /*  ------------------------------------------
                 4.2
                 ------------------------------------------   
@@ -75,7 +79,8 @@ class Program
                 This will allow us to only make updates to the game
                 if the snake moved.
             */
-            if (true)
+
+            if (snake.X != prevSnakeX || snake.Y != prevSnakeY)
             {
 
                 /*  ------------------------------------------
@@ -93,6 +98,15 @@ class Program
                         its position.
                 */
 
+                if (snake.X == pickup.X && snake.Y == pickup.Y)
+                {
+                    score += 100;
+                    canvas.WriteMessageTop("Score: " + score);
+                    snake.Speed += SPEED_INCREASE;
+                    snake.AddSegment();
+                    pickup.SetPosition();
+                }
+
                 /*  ------------------------------------------
                     4.4
                     ------------------------------------------   
@@ -106,6 +120,14 @@ class Program
                     -   Call the Beep method of the Console class.
                     -   Break out of the game loop.
                 */
+
+                if (IsSnakeInBounds() == false || snake.IsHeadTouchingBody())
+                {
+                    canvas.WriteMessageBottom("Game Over :(");
+                    Console.WriteLine();
+                    Console.Beep();
+                    break;
+                }
 
                 //This method call will update the positions of all the snake segments.
                 snake.UpdateSegments();
@@ -123,6 +145,18 @@ class Program
                     between Magenta and Green.
                 */
 
+                for (int i = 0; i<snake.Segments.Count; i++)
+                {
+                    if (i%2 == 0)
+                    {
+                        canvas.Draw(snake.Segments[i].X, snake.Segments[i].Y, snake.Segments[i].Character, ConsoleColor.Magenta);
+                    }
+                    else
+                    {
+                        canvas.Draw(snake.Segments[i].X, snake.Segments[i].Y, snake.Segments[i].Character, ConsoleColor.Green);
+                    }
+                }
+
                 //draw pickup
                 canvas.Draw(pickup.X, pickup.Y, '', ConsoleColor.Red);
             }
@@ -137,6 +171,12 @@ class Program
             Returns true if the snake's X and Y positions are 
             within the bounds of the canvas and false if it's not
         */
+
+        if (snake.X <= canvas.Width && snake.Y <= canvas.Height)
+        {
+            return true;
+        }
+        else
         return false;
     }
 }
